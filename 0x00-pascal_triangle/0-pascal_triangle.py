@@ -2,6 +2,8 @@
 """
 0-pascal_triangle
 """
+
+
 def pascal_triangle(n):
     """
     pascal_triangle
@@ -11,7 +13,7 @@ def pascal_triangle(n):
     for i in range(n):
         if n <= 0:
             return []
-        
+
         triangle.append([1])
         for j in range(1, i + 1):
             if j == i:
