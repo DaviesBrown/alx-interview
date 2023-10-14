@@ -12,7 +12,7 @@ def minOperations(n: int) -> int:
         return 0
     if n <= 1:
         return 0
-    
+
     char_len = 1
     ops = 0
     copy_value = 0
