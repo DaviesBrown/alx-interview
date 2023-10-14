@@ -4,7 +4,7 @@ minimum oeration
 """
 
 
-def minOperations(n):
+def minOperations(n: int) -> int:
     """
     finds the minimum no of operations to get a string
     """
@@ -12,19 +12,18 @@ def minOperations(n):
         return 0
     if n <= 1:
         return 0
+    
+    char_len = 1
+    ops = 0
+    copy_value = 0
 
-    op = 0
-    chars = 1
-    copy = 1
-
-    while chars < n:
-        if n % chars == 0:
-            copy = chars
-            op += 1
-        if chars != n:
-            chars += copy
-            op += 1
+    while char_len < n:
+        if n % char_len == 0:
+            copy = char_len
+            char_len += copy
+            ops += 2
         else:
-            break
+            char_len += copy
+            ops += 1
 
-    return op
+    return ops
