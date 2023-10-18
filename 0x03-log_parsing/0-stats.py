@@ -1,38 +1,47 @@
 #!/usr/bin/python3
 """
-log parsing
+Module that parses a log and prints stats to stdout
 """
-import sys
-import re
+from sys import stdin
 
-r_log = r'(\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}) - (\[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}.\d{6}\]) (\"GET /projects/260 HTTP/1.1\") (\d{3}) (\d{1,4})'
-status_codes = [200, 301, 400, 401, 403, 404, 405, 500]
+status_codes = {
+    "200": 0,
+    "301": 0,
+    "400": 0,
+    "401": 0,
+    "403": 0,
+    "404": 0,
+    "405": 0,
+    "500": 0
+}
 
-file_size = 0
-sdict = {}
+size = 0
+
+
+def print_stats():
+    """Prints the accumulated logs"""
+    print("File size: {}".format(size))
+    for status in sorted(status_codes.keys()):
+        if status_codes[status]:
+            print("{}: {}".format(status, status_codes[status]))
+
+
 if __name__ == "__main__":
+    count = 0
     try:
-        for i, line in enumerate(sys.stdin):
-            h = re.findall(r_log, line)
-            if h:
-                if i % 10 == 0 and i != 0:
-                    print(f'file size: {file_size}')
-                    j = (dict(sorted(sdict.items())))
-                    for k, v in j.items():
-                        print(f'{k}: {v}')
-                    
-                file_size += int(h[0][4])
-
-                if int(h[0][3]) in status_codes:
-                    try:
-                        sdict[h[0][3]] += 1
-                    except:
-                        sdict[h[0][3]] = 1
-            else:
-                continue
+        for line in stdin:
+            try:
+                items = line.split()
+                size += int(items[-1])
+                if items[-2] in status_codes:
+                    status_codes[items[-2]] += 1
+            except:
+                pass
+            if count == 9:
+                print_stats()
+                count = -1
+            count += 1
     except KeyboardInterrupt:
-        print(f'file size: {file_size}')
-        j = (dict(sorted(sdict.items())))
-        for k, v in j.items():
-            print(f'{k}: {v}')
+        print_stats()
         raise
+    print_stats()
