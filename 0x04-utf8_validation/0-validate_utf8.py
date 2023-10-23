@@ -4,8 +4,7 @@ validate utf8
 """
 from typing import List
 from encodings.utf_8 import decode
-print(5)
-print(bytes([256]))
+
 
 def validUTF8(data: List[int]) -> bool:
     """
