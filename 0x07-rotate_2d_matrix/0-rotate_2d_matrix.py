@@ -2,10 +2,9 @@
 """
 rotate 2d matrix
 """
-from typing import List
 
 
-def rotate_2d_matrix(matrix: List[List]):
+def rotate_2d_matrix(matrix):
     """ rotate 2d matrix"""
     new_matrix = [tuple(i) for i in matrix]
     mat_len = len(matrix)
