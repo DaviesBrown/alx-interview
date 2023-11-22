@@ -5,18 +5,16 @@ make change module
 
 
 def makeChange(coins, total):
-    """
-    Given a pile of coins of different values,
-    determines the fewest number of coins needed
-    to meet a given amount total
-    """
-    if total <= 0: return 0
-    count = 0
-    sorted_coins = sorted(coins, reverse=True)
-    for i in sorted_coins:
-        while total - i >= 0:
-            count += 1
-            total = total - i
+    '''Function that makes change for a given total'''
+    if total < 1:
+        return 0
+    change = 0
+    coins.sort(reverse=True)
+    for coin in coins:
+        temp_change = int(total / coin)
+        total -= (temp_change * coin)
+        change += temp_change
         if total == 0:
-            return count
-    return -1
+            return change
+    if total != 0:
+        return -1
