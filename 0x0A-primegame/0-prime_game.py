@@ -5,6 +5,7 @@ prime game
 
 
 def isPrime(num):
+    """ return if a num is prime"""
     if num < 2:
         return False
     for i in range(2, num):
